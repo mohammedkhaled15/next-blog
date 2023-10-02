@@ -3,7 +3,8 @@
 }
 .title {
   font-size: 56px;
-  text-align: center;
+  text-align: left;
+  font-weight: 300;
 }
 .post {
   margin-top: 60px;
@@ -26,5 +27,16 @@
   gap: 20px;
 }
 .postTitle {
-  font-size: 48px;
+  font-size: 42px;
+}
+.postDesc {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--softTextColor);
+}
+.button {
+  padding: 16px 20px;
+  border: none;
+  width: max-content;
+  border-radius: 5px;
 }
