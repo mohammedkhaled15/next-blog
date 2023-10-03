@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Pagination from "../pagination/Pagination"
 import styles from "./cardList.module.css"
 import Card from "../card/Card"
