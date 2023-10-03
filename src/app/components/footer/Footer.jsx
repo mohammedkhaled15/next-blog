@@ -7,8 +7,8 @@ export default function Footer() {
     <div className={styles.container}>
       <div className={styles.info}>
         <div className={styles.logo}>
-          <Image src="/logo.png" alt="" width={50} height={50} />
-          <h1 className={styles.logoText}>Mohammed Kgaled Blog</h1>
+          <Image className={styles.logoImage} src="/logo.png" alt="" width={50} height={50} />
+          <h1 className={styles.logoText}>Mohammed Khaled Blog</h1>
         </div>
         <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem odit nostrum animi ex minus perferendis tempora eius consequatur sequi corporis doloremque, quod saepe dolorem. Debitis quasi qui tenetur omnis cum.</p>
         <div className={styles.icons}>

@@ -17,6 +17,10 @@
   align-items: center;
   gap: 10px;
 }
+.logoImage {
+  object-fit: cover;
+  border-radius: 50%;
+}
 .logoText {
   font-size: 24px;
 }
