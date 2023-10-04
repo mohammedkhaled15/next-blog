@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function Featured() {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}><b style={{ color: "white" }}>It&apos;s Me, Mohammed Khaled </b>Discover All My Great Ideas and Stories</h1>
+      <h1 className={styles.title}><b style={{ color: "#ccc" }}>It&apos;s Me, Mohammed Khaled </b>Discover All My Great Ideas and Stories</h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>
           <Image src="/p1.jpeg" alt="hero" fill />
