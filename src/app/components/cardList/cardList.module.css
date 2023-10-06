@@ -1,5 +1,7 @@
 .container {
   flex: 5;
+}
+.posts {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

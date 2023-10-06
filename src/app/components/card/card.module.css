@@ -24,6 +24,7 @@
 .category {
   color: crimson;
   font-weight: 500;
+  text-transform: capitalize;
 }
 .desc {
   font-size: 18px;

@@ -18,7 +18,7 @@ const CategoryList = async () => {
       <h1 className={styles.title}>Popular Categories</h1>
       <div className={styles.categories}>
         {categories?.map(cat => (
-          <Link key={cat._id} href="/blog?cat=style" className={`${styles.category} ${styles[cat.title]}`}>
+          <Link key={cat._id} href={`/blog?cat=${cat.slug}`} className={`${styles.category} ${styles[cat.title]}`}>
             {cat.img && <Image src={cat.img} alt="category image" width={32} height={32} className={styles.image} />}
             {cat.title}
           </Link>
