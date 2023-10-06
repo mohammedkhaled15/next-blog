@@ -6,16 +6,21 @@ export const GET = async (req) => {
 
   const page = searchParams.get("page");
 
-  const POSTS_PER_PAGE = 2;
+  const POSTS_PER_PAGE = 3;
 
-  console.log(searchParams);
+  const query = {
+    take: POSTS_PER_PAGE,
+    skip: POSTS_PER_PAGE * (page - 1),
+  };
 
   try {
-    const posts = await prisma.post.findMany({
-      take: POSTS_PER_PAGE,
-      skip: 1,
-    });
-    return new NextResponse(JSON.stringify(posts, { status: 200 }));
+    const [posts, count] = await prisma.$transaction([
+      prisma.post.findMany(query),
+      prisma.post.count(),
+    ]);
+    return new NextResponse(
+      JSON.stringify({ posts, count, POSTS_PER_PAGE }, { status: 200 })
+    );
   } catch (error) {
     console.log(error);
     return new NextResponse(

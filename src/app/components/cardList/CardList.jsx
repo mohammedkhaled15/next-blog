@@ -3,7 +3,7 @@ import styles from "./cardList.module.css"
 import Card from "../card/Card"
 
 const getData = async (page) => {
-  const res = await fetch(`http://localhost:3000/api/posts?page=${page}`, { cache: "no-store" })
+  const res = await fetch(`http://localhost:3000/api/posts?page=${page || 1}`, { cache: "no-store" })
   if (!res.ok) {
     throw new Error("Failed")
   }
@@ -11,14 +11,17 @@ const getData = async (page) => {
 }
 
 const CardList = async ({ page }) => {
-  const posts = getData(page)
+  const { posts, count, POSTS_PER_PAGE } = await getData(page)
+
+  const hasNext = POSTS_PER_PAGE * (page - 1) + POSTS_PER_PAGE < count
+  const hasPrev = POSTS_PER_PAGE * (page - 1) > 0
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Recent Posts</h1>
       <div className={styles.posts}>
-        <Card />
+        <Card posts={posts} />
       </div>
-      <Pagination />
+      <Pagination page={page} hasNext={hasNext} hasPrev={hasPrev}/>
     </div>
   )
 }
