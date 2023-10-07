@@ -13,7 +13,8 @@ export default function Card({ posts }) {
           <span className={styles.date}>{post.createdAt.substring(0, 10)} - </span>
           <span className={styles.category}>{post.catSlug}</span>
         </div>
-        <Link href={`/posts/${post.slug}`}>
+        {console.log("from card", post.slug)}
+        <Link href={`/posts/${post.slug.replaceAll("?", "%3F")}`}>
           <h1>{post.title}</h1>
         </Link>
         <p className={styles.desc}>{post.desc.substring(0, 200)}...</p>

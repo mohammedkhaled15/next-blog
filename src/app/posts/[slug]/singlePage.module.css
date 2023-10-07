@@ -33,6 +33,7 @@
   font-size: 20px;
   font-weight: 300;
   margin: 20px;
+  text-align: justify;
 }
 @media screen and (max-width: 1536px) {
   .title {
