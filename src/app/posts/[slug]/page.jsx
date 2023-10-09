@@ -18,8 +18,6 @@ const PostPage = async ({ params }) => {
 
   const { slug } = params
 
-  console.log("from slug page", slug)
-
   const post = await getData(slug)
 
   return (
