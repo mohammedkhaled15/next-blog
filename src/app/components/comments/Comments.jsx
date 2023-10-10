@@ -12,18 +12,19 @@ export default function Comments({ post }) {
   console.log(comments)
 
   const { status } = useSession()
+  console.log(status)
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Comments</h1>
       {
-        status === "authinticated"
+        status === "authenticated"
           ? (
             <div className={styles.writeComment}>
               <textarea placeholder="Write a comment... " className={styles.input}></textarea>
               <button className={styles.button}>Send</button>
             </div>
           )
-          : <Link href="/login">Login to write a comment</Link>
+          : <Link href="/login" className={styles.loginLink}>Login to write a comment</Link>
       }
       <div className={styles.comments}>
         {
