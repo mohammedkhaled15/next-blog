@@ -8,7 +8,7 @@ export default function UserStamp({ username, postDate, imageUrl }) {
         <Image src={imageUrl} alt="" fill className={styles.avatar} />
       </div>}
       <div className={styles.userTextContainer}>
-        <span className={styles.name}>{username.split("@")[0]}</span>
+        <span className={styles.name}>{username}</span>
         <span className={styles.date}>{postDate.substring(0, 10)}</span>
       </div>
     </div>

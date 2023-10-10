@@ -1,10 +1,17 @@
-import Image from "next/image"
+"use client"
 import styles from "./comments.module.css"
 import Link from "next/link"
 import UserStamp from "../userStamp/UserStamp"
+import { useSession } from "next-auth/react"
+import useSWR from "swr"
 
-export default function Comments() {
-  const status = "authinticated"
+export default function Comments({ post }) {
+
+  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const { data: comments, error, isLoading } = useSWR(`/api/comments?postSlug=${post?.slug}`, fetcher)
+  console.log(comments)
+
+  const { status } = useSession()
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Comments</h1>
@@ -19,22 +26,16 @@ export default function Comments() {
           : <Link href="/login">Login to write a comment</Link>
       }
       <div className={styles.comments}>
-        <div className={styles.comment}>
-          <UserStamp username="John Doe" postDate="01.05.1990" imageUrl="/p1.jpeg" />
-          <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut vel quam! Nihil temporibus ut veritatis rem hic ipsa vel eum laborum beatae, incidunt adipisci ratione ex, quo, deleniti necessitatibus!</p>
-        </div>
-        <div className={styles.comment}>
-          <UserStamp username="John Doe" postDate="01.05.1990" imageUrl="/p1.jpeg" />
-          <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut vel quam! Nihil temporibus ut veritatis rem hic ipsa vel eum laborum beatae, incidunt adipisci ratione ex, quo, deleniti necessitatibus!</p>
-        </div>
-        <div className={styles.comment}>
-          <UserStamp username="John Doe" postDate="01.05.1990" imageUrl="/p1.jpeg" />
-          <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut vel quam! Nihil temporibus ut veritatis rem hic ipsa vel eum laborum beatae, incidunt adipisci ratione ex, quo, deleniti necessitatibus!</p>
-        </div>
-        <div className={styles.comment}>
-          <UserStamp username="John Doe" postDate="01.05.1990" imageUrl="/p1.jpeg" />
-          <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut vel quam! Nihil temporibus ut veritatis rem hic ipsa vel eum laborum beatae, incidunt adipisci ratione ex, quo, deleniti necessitatibus!</p>
-        </div>
+        {
+          comments?.map(comment => {
+            return (
+              <div className={styles.comment} key={comment._id}>
+                <UserStamp username={comment?.user?.name} postDate={comment.createdAt} imageUrl={comment?.user?.image} />
+                <p className={styles.desc}>{comment.desc}</p>
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   )
