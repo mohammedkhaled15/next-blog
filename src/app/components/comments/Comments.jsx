@@ -4,15 +4,20 @@ import Link from "next/link"
 import UserStamp from "../userStamp/UserStamp"
 import { useSession } from "next-auth/react"
 import useSWR from "swr"
+import { redirect } from "next/dist/server/api-utils"
+import { usePathname, useRouter } from "next/navigation"
+
+// onClick={() => router.push({ pathName: "/login", query: { from: router.pathName } })}
 
 export default function Comments({ post }) {
 
   const fetcher = (...args) => fetch(...args).then(res => res.json())
   const { data: comments, error, isLoading } = useSWR(`/api/comments?postSlug=${post?.slug}`, fetcher)
-  console.log(comments)
 
   const { status } = useSession()
-  console.log(status)
+
+  const router = useRouter()
+  const pathName = usePathname()
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Comments</h1>
@@ -24,7 +29,7 @@ export default function Comments({ post }) {
               <button className={styles.button}>Send</button>
             </div>
           )
-          : <Link href="/login" className={styles.loginLink}>Login to write a comment</Link>
+          : <Link href={`/login?from=${pathName}`} className={styles.loginLink} >Login to write a comment</Link>
       }
       <div className={styles.comments}>
         {
