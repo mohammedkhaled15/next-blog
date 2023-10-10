@@ -6,7 +6,7 @@ export const GET = async (req) => {
   const postSlug = searchParams.get("postSlug");
   try {
     const comments = await prisma.comment.findMany({
-      where: { postSlug },
+      where: { ...(postSlug && { postSlug }) },
       include: { user: true },
     });
     return new NextResponse(JSON.stringify(comments, { status: 200 }));

@@ -27,10 +27,10 @@ export default function Comments({ post }) {
       }
       <div className={styles.comments}>
         {
-          comments?.map(comment => {
+          isLoading ? "Loading..." : comments?.map(comment => {
             return (
               <div className={styles.comment} key={comment._id}>
-                <UserStamp username={comment?.user?.name} postDate={comment.createdAt} imageUrl={comment?.user?.image} />
+                <UserStamp position={"comment"} username={comment?.user?.name} postDate={comment.createdAt} imageUrl={comment?.user?.image} />
                 <p className={styles.desc}>{comment.desc}</p>
               </div>
             )
