@@ -68,7 +68,15 @@ export default function WritePage() {
       .replace(/^-+|-+$]+/g, "")
 
   const handleSubmit = async () => {
-
+    await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        desc: value,
+        img: media,
+        slug: slugify(title)
+      })
+    })
   }
 
   if (status === "loading") {
