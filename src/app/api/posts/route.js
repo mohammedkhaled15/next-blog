@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/utils/authOptions";
 import prisma from "@/utils/connectDb";
 import { NextResponse } from "next/server";
 

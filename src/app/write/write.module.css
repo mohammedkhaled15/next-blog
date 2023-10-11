@@ -30,6 +30,9 @@
   width: 100%;
   left: 50px;
 }
+.selectLabel {
+  margin-bottom: 15px;
+}
 .input {
   color: var(--textColor);
   padding: 50px;

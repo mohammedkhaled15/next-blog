@@ -19,6 +19,7 @@ const storage = getStorage(app);
 
 export default function WritePage() {
 
+
   const [file, setFile] = useState(null)
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
@@ -26,11 +27,11 @@ export default function WritePage() {
   const [title, setTitle] = useState("")
 
   const [selectedOptions, setSelectedOptions] = useState([])
-  const [selectOptions, setSelectOptions] = useState([])
+  const [selectOptions, setSelectOptions] = useState({})
   const [newCats, setNewCats] = useState([])
 
   const fetcher = (...args) => fetch(...args).then(res => res.json())
-  const { data: cats, mutate, isLoading } = useSWR(`/api/comments`, fetcher)
+  const { data: cats, mutate, isLoading } = useSWR(`/api/categories`, fetcher)
 
   const { status } = useSession()
   const router = useRouter()
@@ -45,8 +46,9 @@ export default function WritePage() {
   }
 
   useEffect(() => {
-    skills && setSelectOptions(cats)
+    cats && setSelectOptions(cats.map(cat => ({ value: cat.title, label: cat.title, optionIsNew: false })))
   }, [cats])
+  console.log("options=>", selectOptions)
 
   useEffect(() => {
     const uploadFile = () => {
@@ -90,15 +92,24 @@ export default function WritePage() {
       .replace(/^-+|-+$]+/g, "")
 
   const handleSubmit = async () => {
-    await fetch("/api/posts", {
+    if (selectedOptions.optionIsNew === true) {
+      await fetch("/api/categories", {
+        method: "POST",
+        body: JSON.stringify({ slug: selectedOptions.value, title: selectedOptions.value })
+      })
+    }
+    const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
         title,
         desc: value,
         img: media,
-        slug: slugify(title)
+        slug: slugify(title),
+        catSlug: slugify(selectedOptions.value)
       })
     })
+    console.log("selected=>", selectedOptions)
+    console.log("res=>", res.data)
   }
 
   if (status === "loading") {
@@ -115,27 +126,40 @@ export default function WritePage() {
     <div className={styles.container}>
       <input type="text" placeholder="Title" className={styles.input} onChange={(e) => setTitle(e.target.value)} />
       <div className={styles.select}>
+        <label className={styles.selectLabel} htmlFor="cats">Select Categories</label>
         <CreatableSelect
-          menuPortalTarget={window.document.body}
+          // menuPortalTarget={window.document.body}
           id="cats"
           styles={{
-            container: (base, state) => ({ ...base, width: "100%", minHeight: "30px", border: "none" }),
-            control: (base) => ({ ...base, minHeight: "25px", backgroundColor: "transparent", color: "white" }),
-            input: (base) => ({ ...base, color: "white" }),
+            container: (base, state) => ({ ...base, marginTop: "20px", marginBottom: "20px", width: "200px", minHeight: "30px", border: "none" }),
+            control: (base) => ({ ...base, minHeight: "25px", backgroundColor: "transparent" }),
+            input: (base) => ({ ...base, color: "var(--textColor)" }),
             menu: (base) => ({ ...base, borderRadius: "10px" }),
-            menuList: (base) => ({ ...base, backgroundColor: "#1F1F38", overflow: "scroll" }),
-            option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? "#4DB5FF" : "", fontSize: "12px" }),
+            singleValue: (base) => ({ ...base, color: "var(--textColor)" }),
+            menuList: (base) => ({
+              ...base, backgroundColor: "var(--bg)", overflow: "scroll", "::-webkit-scrollbar": {
+                width: "4px",
+                height: "0px",
+              },
+              "::-webkit-scrollbar-track": {
+                background: "#f1f1f1"
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "#888"
+              },
+              "::-webkit-scrollbar-thumb:hover": {
+                background: "#555"
+              }
+            }),
+            option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? "var(--softBg)" : "", fontSize: "12px", color: "--var(--textColor)" }),
             multiValueLabel: (base) => ({ ...base, backgroundColor: "#4DB5FF", color: "white", padding: "3px", width: "fit-content" }),
           }}
           options={selectOptions}
           components={animatedComponents}
-          isMulti={true}
           closeMenuOnSelect
           onChange={handleSelectChange}
-          placeholder="Select Or Create new Category..."
           value={selectedOptions}
         />
-        <label htmlFor="cats">Select Categories</label>
       </div>
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>
@@ -148,7 +172,7 @@ export default function WritePage() {
                 type="file"
                 id="image"
                 onChange={(e) => setFile(e.target.files[0])}
-                style={{ display: none }} />
+                style={{ display: "none" }} />
               <button className={styles.addButton}>
                 <label htmlFor="image">
                   <Image src="/image.png" alt="" width={16} height={16} />
