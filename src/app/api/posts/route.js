@@ -32,3 +32,25 @@ export const GET = async (req) => {
     );
   }
 };
+
+// Create A Post
+export const POST = async (req, res) => {
+  try {
+    const session = await getAuthSession();
+    if (!session) {
+      return new NextResponse(
+        JSON.stringify({ message: "Not Permited entry!" }, { status: 401 })
+      );
+    }
+    const body = await req.json();
+    const post = await prisma.post.create({
+      data: { ...body, userEmail: session.user.email },
+    });
+    return new NextResponse(JSON.stringify(post, { status: 201 }));
+  } catch (error) {
+    console.log(error);
+    return new NextResponse(
+      JSON.stringify({ message: "Failed" }, { status: 500 })
+    );
+  }
+};

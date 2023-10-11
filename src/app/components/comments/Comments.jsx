@@ -4,20 +4,26 @@ import Link from "next/link"
 import UserStamp from "../userStamp/UserStamp"
 import { useSession } from "next-auth/react"
 import useSWR from "swr"
-import { redirect } from "next/dist/server/api-utils"
-import { usePathname, useRouter } from "next/navigation"
-
-// onClick={() => router.push({ pathName: "/login", query: { from: router.pathName } })}
+import { usePathname } from "next/navigation"
+import { useState } from "react"
 
 export default function Comments({ post }) {
 
   const fetcher = (...args) => fetch(...args).then(res => res.json())
-  const { data: comments, error, isLoading } = useSWR(`/api/comments?postSlug=${post?.slug}`, fetcher)
+  const { data: comments, mutate, isLoading } = useSWR(`/api/comments?postSlug=${post?.slug}`, fetcher)
 
   const { status } = useSession()
-
-  const router = useRouter()
   const pathName = usePathname()
+
+  const [desc, setDesc] = useState("")
+  const handleSubmit = async () => {
+    await fetch("/api/comments", {
+      method: "POST",
+      body: JSON.stringify({ desc, postSlug: post.slug }),
+    })
+    setDesc("")
+    mutate()
+  }
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Comments</h1>
@@ -25,8 +31,13 @@ export default function Comments({ post }) {
         status === "authenticated"
           ? (
             <div className={styles.writeComment}>
-              <textarea placeholder="Write a comment... " className={styles.input}></textarea>
-              <button className={styles.button}>Send</button>
+              <textarea
+                placeholder="Write a comment... "
+                className={styles.input}
+                onChange={(e) => setDesc(e.target.value)}
+                value={desc}
+              ></textarea>
+              <button className={styles.button} onClick={handleSubmit}>Send</button>
             </div>
           )
           : <Link href={`/login?from=${pathName}`} className={styles.loginLink} >Login to write a comment</Link>

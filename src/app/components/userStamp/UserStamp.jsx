@@ -9,7 +9,7 @@ export default function UserStamp({ username, postDate, imageUrl, position }) {
       </div>}
       <div className={styles.userTextContainer}>
         <span className={styles.name}>{username}</span>
-        <span className={styles.date}>{position !== "comment" && postDate.substring(0, 10)}</span>
+        <span className={styles.date}>{position !== "comment" ? postDate.substring(0, 10) : postDate}</span>
       </div>
     </div>
   )

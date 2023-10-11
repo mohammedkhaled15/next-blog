@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./connectDb";
+import { getServerSession } from "next-auth";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -21,3 +22,5 @@ export const authOptions = {
     // }),
   ],
 };
+
+export const getAuthSession = () => getServerSession(authOptions);
