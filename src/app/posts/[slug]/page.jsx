@@ -27,6 +27,7 @@ const PostPage = async ({ params }) => {
           <div className={styles.infoContainer}>
             <div className={styles.textContainer}>
               <h1 className={styles.title}>{post.title}</h1>
+              <span className={styles.views}>Views: {post.views}</span>
               <UserStamp position={"post"} username={post?.user?.name} postDate={post?.createdAt} imageUrl={post?.user?.image} />
             </div>
             {post.img && <div className={styles.imageContainer}>
