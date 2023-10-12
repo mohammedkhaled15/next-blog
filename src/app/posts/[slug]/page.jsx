@@ -3,6 +3,7 @@ import Menu from "../../components/menu/Menu"
 import styles from "./singlePage.module.css"
 import Comments from "../../components/comments/Comments"
 import UserStamp from "../../components/userStamp/UserStamp"
+import parse from 'html-react-parser';
 
 const getData = async (slug) => {
   const res = await fetch(`http://localhost:3000/api/posts/${slug.replaceAll("%20", " ")}`, {
@@ -27,8 +28,8 @@ const PostPage = async ({ params }) => {
           <div className={styles.infoContainer}>
             <div className={styles.textContainer}>
               <h1 className={styles.title}>{post.title}</h1>
-              <span className={styles.views}>Views: {post.views}</span>
               <UserStamp position={"post"} username={post?.user?.name} postDate={post?.createdAt} imageUrl={post?.user?.image} />
+              <span className={styles.views}>Views: {post.views}</span>
             </div>
             {post.img && <div className={styles.imageContainer}>
               <Image src={post.img} alt="" fill className={styles.image} />
@@ -36,7 +37,10 @@ const PostPage = async ({ params }) => {
           </div>
           <div className={styles.content}>
             <div className={styles.post}>
-              <div className={styles.desc} dangerouslySetInnerHTML={{ __html: post.desc }} />
+              {/* <div className={styles.desc} dangerouslySetInnerHTML={{ __html: post.desc }} /> */}
+              <div className={styles.desc}  >
+                {parse(post.desc)}
+              </div>
               <div className={styles.comment}>
                 <Comments post={post} />
               </div>

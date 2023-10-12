@@ -11,6 +11,7 @@ export const GET = async (req) => {
   const POSTS_PER_PAGE = 3;
 
   const query = {
+    orderBy: [{ views: "desc" }],
     take: POSTS_PER_PAGE,
     skip: POSTS_PER_PAGE * (page - 1),
     where: {
