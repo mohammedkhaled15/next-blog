@@ -6,13 +6,14 @@ import UserStamp from "../../components/userStamp/UserStamp"
 import parse from 'html-react-parser';
 
 const getData = async (slug) => {
-  const res = await fetch(`http://localhost:3000/api/posts/${slug.replaceAll("%20", " ")}`, {
-    cache: "no-store"
-  })
-  if (!res.ok) {
-    throw new Error("Failed")
+  try {
+    const res = await fetch(`http://localhost:3000/api/posts/${slug.replaceAll("%20", " ")}`, {
+      cache: "no-store"
+    })
+    return res.json()
+  } catch (error) {
+    throw new Error(error)
   }
-  return res.json()
 }
 
 const PostPage = async ({ params }) => {
