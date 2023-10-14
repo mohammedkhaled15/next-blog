@@ -7,6 +7,7 @@ const getData = async (page, cat) => {
     const res = await fetch(`http://localhost:3000/api/posts?page=${page || 1}&cat=${cat || ""}`, { cache: "no-store" })
     return res.json()
   } catch (error) {
+    console.log(error)
     throw new Error(error)
   }
 }
