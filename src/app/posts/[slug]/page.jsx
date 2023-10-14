@@ -12,6 +12,7 @@ const getData = async (slug) => {
     })
     return res.json()
   } catch (error) {
+    console.log(error)
     throw new Error(error)
   }
 }
