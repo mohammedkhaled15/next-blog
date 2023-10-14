@@ -92,7 +92,7 @@ export default function WritePage() {
       .replace(/^-+|-+$]+/g, "")
 
   const handleSubmit = async () => {
-    if (selectedOptions.optionIsNew === true) {
+    if (selectedOptions.__isNew__ === true) {
       await fetch("/api/categories", {
         method: "POST",
         body: JSON.stringify({ slug: selectedOptions.value, title: selectedOptions.value })
@@ -108,8 +108,10 @@ export default function WritePage() {
         catSlug: slugify(selectedOptions.value)
       })
     })
+    console.log("optionIsNew?=>", selectedOptions)
     console.log("selected=>", selectedOptions)
     console.log("res=>", res.data)
+    router.push(`/posts/${slugify(title)}`)
   }
 
   if (status === "loading") {

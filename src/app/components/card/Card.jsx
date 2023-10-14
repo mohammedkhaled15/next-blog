@@ -1,6 +1,7 @@
 import Link from "next/link"
 import styles from "./card.module.css"
 import Image from "next/image"
+import parse from 'html-react-parser';
 
 export default function Card({ posts }) {
   return posts?.map(post => (
@@ -16,7 +17,7 @@ export default function Card({ posts }) {
         <Link href={`/posts/${post.slug.replaceAll("?", "%3F")}`}>
           <h1>{post.title}</h1>
         </Link>
-        <p className={styles.desc}>{post.desc.substring(0, 200)}...</p>
+        <div className={styles.desc}>{parse(post.desc)}</div>
         <Link href={`/posts/${post.slug}`} className={styles.link}>Read More</Link >
       </div>
     </div>

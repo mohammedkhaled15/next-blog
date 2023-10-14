@@ -30,6 +30,8 @@
   font-size: 18px;
   font-weight: 300;
   color: var(--softTextColor);
+  max-height: 250px;
+  overflow: hidden;
 }
 .link {
   border-bottom: 1px solid crimson;
