@@ -21,7 +21,7 @@ const CardList = async ({ page, cat }) => {
     <div className={styles.container}>
       <h1 className={styles.title}>Recent Posts</h1>
       <div className={styles.posts}>
-        <Card posts={posts} />
+        {/* <Card posts={posts} /> */}
       </div>
       {/* <Pagination page={page} hasNext={hasNext} hasPrev={hasPrev} /> */}
     </div>
