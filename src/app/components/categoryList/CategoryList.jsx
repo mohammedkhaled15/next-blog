@@ -16,6 +16,7 @@ import { getCategories } from "@/lib/categoriesActions"
 
 const CategoryList = async () => {
   const categories = await getCategories()
+  console.log(categories)
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Popular Categories</h1>
