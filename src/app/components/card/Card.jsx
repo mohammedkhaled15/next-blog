@@ -6,9 +6,12 @@ import parse from 'html-react-parser';
 export default function Card({ posts }) {
   return posts?.map(post => (
     <div className={styles.container} key={post._id}>
-      {post.img && <div className={styles.imageContainer}>
-        <Image src={post.img} alt="post image" fill className={styles.image} />
-      </div>}
+      {
+        post.img &&
+        <div className={styles.imageContainer}>
+          <Image src={post.img} alt="post image" fill className={styles.image} />
+        </div>
+      }
       <div className={styles.textContainer}>
         <div className={styles.detail}>
           <span className={styles.date}>{post.createdAt} - </span>
