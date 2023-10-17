@@ -21,8 +21,10 @@ import { getSinglePost } from "@/lib/postsActions"
 const PostPage = async ({ params }) => {
 
   const { slug } = params
+  console.log("slugFromPage=> ", slug)
 
   const post = await getSinglePost(slug)
+  console.log("post=> ", post)
 
   return (
     <div className={styles.container}>

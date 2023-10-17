@@ -11,6 +11,7 @@ import makeAnimated from 'react-select/animated';
 import useSWR from "swr"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "@/utils/firebase"
+import { slugify } from "@/lib/postsActions"
 
 //Dynamic import cause this library needs document from browser
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
@@ -83,13 +84,6 @@ export default function WritePage() {
     }
     file && uploadFile()
   }, [file])
-
-  const slugify = str =>
-    str.toLowerCase()
-      .trim()
-      // .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$]+/g, "")
 
   const handleSubmit = async () => {
     if (selectedOptions.__isNew__ === true) {
