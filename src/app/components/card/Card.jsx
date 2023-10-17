@@ -11,7 +11,7 @@ export default function Card({ posts }) {
       </div>}
       <div className={styles.textContainer}>
         <div className={styles.detail}>
-          <span className={styles.date}>{post.createdAt.substring(0, 10)} - </span>
+          <span className={styles.date}>{post.createdAt} - </span>
           <span className={styles.category}>{post.catSlug}</span>
         </div>
         <Link href={`/posts/${post.slug.replaceAll("?", "%3F")}`}>
