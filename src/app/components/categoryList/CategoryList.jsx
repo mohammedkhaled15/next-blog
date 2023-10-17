@@ -16,11 +16,12 @@ import { getCategories } from "@/lib/categoriesActions"
 
 const CategoryList = async () => {
   const categories = await getCategories()
+  console.log("categories=>", categories)
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Popular Categories</h1>
       <div className={styles.categories}>
-        {categories?.map(cat => (
+        {categories?.length > 0 && categories?.map(cat => (
           <Link key={cat._id} href={`/blog?cat=${cat.slug}`} className={`${styles.category} ${styles[cat.title]}`}>
             {cat.img && <Image src={cat.img} alt="category image" width={32} height={32} className={styles.image} />}
             {cat.title}
