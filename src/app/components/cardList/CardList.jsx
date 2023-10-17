@@ -15,6 +15,7 @@ import { getAllPosts } from "@/lib/postsActions"
 
 const CardList = async ({ page, cat }) => {
   const { posts, count, POSTS_PER_PAGE } = await getAllPosts(page, cat)
+  console.log(posts)
   const hasNext = POSTS_PER_PAGE * (page - 1) + POSTS_PER_PAGE < count
   const hasPrev = POSTS_PER_PAGE * (page - 1) > 0
   return (
