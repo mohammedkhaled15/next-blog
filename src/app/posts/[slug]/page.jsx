@@ -4,24 +4,25 @@ import styles from "./singlePage.module.css"
 import Comments from "../../components/comments/Comments"
 import UserStamp from "../../components/userStamp/UserStamp"
 import parse from 'html-react-parser';
+import { getSinglePost } from "@/lib/postsActions"
 
-const getData = async (slug) => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/posts/${slug.replaceAll("%20", " ")}`, {
-      cache: "no-store"
-    })
-    return res.json()
-  } catch (error) {
-    console.log(error)
-    throw new Error(error)
-  }
-}
+// const getData = async (slug) => {
+//   try {
+//     const res = await fetch(`http://localhost:3000/api/posts/${slug.replaceAll("%20", " ")}`, {
+//       cache: "no-store"
+//     })
+//     return res.json()
+//   } catch (error) {
+//     console.log(error)
+//     throw new Error(error)
+//   }
+// }
 
 const PostPage = async ({ params }) => {
 
   const { slug } = params
 
-  const post = await getData(slug)
+  const post = await getSinglePost(slug)
 
   return (
     <div className={styles.container}>
